@@ -1,0 +1,12 @@
+[submodule "mdBook"]
+	path = mdBook
+	url = https://github.com/rust-lang/mdBook.git
+[submodule "mdbook-admonish"]
+	path = mdbook-admonish
+	url = https://github.com/tommilligan/mdbook-admonish.git
+[submodule "mdbook-katex"]
+	path = mdbook-katex
+	url = https://github.com/lzanini/mdbook-katex.git
+[submodule "mdbook-tera"]
+	path = mdbook-tera
+	url = https://github.com/avitex/mdbook-tera.git
