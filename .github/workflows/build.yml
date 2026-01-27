@@ -23,7 +23,13 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [ubuntu-latest, macos-latest]
+                include:
+                    - os: ubuntu-latest
+                      target: x86_64-unknown-linux-gnu
+                    - os: macos-latest
+                      target: aarch64-apple-darwin
+                    - os: macos-latest
+                      target: x86_64-apple-darwin
         steps:
             - name: Git checkout
               uses: actions/checkout@v6
@@ -37,22 +43,17 @@ jobs:
             - name: Install stable Rust toolchain
               run: |
                     curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
+                    rustup target add ${{ matrix.target }}
                     rustup update stable
 
-            - name: Build for Ubuntu
+            - name: Build
               if: ${{ matrix.os == 'ubuntu-latest' }}
-              run: ./build.sh ${{ inputs.tag }}
+              run: ./build.sh ${{ inputs.tag }} ${{ matrix.target }}
 
-            - name: Build for macOS
-              if: ${{ matrix.os == 'macos-latest' }}
-              run: |
-                  ./build.sh ${{ inputs.tag }} aarch64-apple-darwin 
-                  ./build.sh ${{ inputs.tag }} x86_64-apple-darwin
-
-            - name: Upload artifacts
+            - name: Upload artifact
               if: ${{ inputs.upload_artifacts }}
               uses: actions/upload-artifact@v6
               with:
-                  name: build-${{ matrix.os }}
-                  path: ./labbook-*-*.tar.xz
+                  name: build-${{ inputs.tag }}-${{ matrix.target }}
+                  path: ./labbook-${{ inputs.tag }}-${{ matrix.target }}.tar.xz
                   compression-level: 0
