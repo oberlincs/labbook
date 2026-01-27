@@ -47,7 +47,6 @@ jobs:
                     rustup update stable
 
             - name: Build
-              if: ${{ matrix.os == 'ubuntu-latest' }}
               run: ./build.sh ${{ inputs.tag }} ${{ matrix.target }}
 
             - name: Upload artifact
