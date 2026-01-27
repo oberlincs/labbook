@@ -1,37 +1,21 @@
 name: CI
 on:
-  push:
-    branches: [main]
-  pull_request:
-    types: [opened, synchronize]
-    branches: ['*']
+    push:
+        branches: [main]
+    pull_request:
+        types: [opened, synchronize]
+        branches: ['*']
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+    contents: read
+    pages: write
+    id-token: write
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    steps:
-      - name: Git checkout
-        uses: actions/checkout@v6
-
-      - name: Fetch submodules
-        run: ./submodule-version.sh init
-
-      - name: Verify submodule versions
-        run: ./submodule-version.sh verify
-
-      - name: Install stable Rust toolchain
-        run: |
-          curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -y | sh
-          rustup update stable
-
-      - name: Build
-        run: ./build.sh
+    build:
+        name: Build
+        uses: ./.github/workflows/build.yml
+        with:
+            tag: "ci-${{ github.run_id }}"
+            upload_artifacts: true
   
