@@ -42,6 +42,5 @@ jobs:
                   tag_name: ${{ github.ref_name }}
                   files: labbook-${{ github.ref_name }}-*.tar.xz
                   body_path: versions.txt
-                  draft: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
