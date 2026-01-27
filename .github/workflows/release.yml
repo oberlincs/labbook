@@ -22,9 +22,12 @@ jobs:
         steps:
             - name: Download Artifacts
               uses: actions/download-artifact@v7
+              with:
+                    merge-multiple: true
             
             - name: Get versions
               run: |
+                  ls -lh
                   tar zxf labbook-${{ github.ref_name }}-x86_64-unknown-linux-gnu.tar.xz
                   for bin in bin/*; do
                         ${bin} --version >> versions.txt
