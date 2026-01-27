@@ -12,7 +12,7 @@ too. To check them out, run the following command.
 ./submodule-version.sh init
 ```
 
-## Updating the version of the tool
+## Updating the version of the tools
 
 Change the version in the `VERSIONS` file. These should be git tags for the corresponding project.
 
@@ -30,7 +30,12 @@ git push
 
 ## Building a new release
 
-TODO
+After updating the tools and pushing, creating a new release requires pushing a new tag.
+
+```shell
+git tag v1.0.0
+git push --tags
+```
 
 
 ## Rationale
