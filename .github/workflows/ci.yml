@@ -20,9 +20,10 @@ jobs:
     steps:
       - name: Git checkout
         uses: actions/checkout@v6
-        with:
-            submodules: true
-            fetch-tags: true
+
+      - name: Fetch submodules
+        run: ./submodule-version.sh init
+
       - name: Verify submodule versions
         run: ./submodule-version.sh verify
 

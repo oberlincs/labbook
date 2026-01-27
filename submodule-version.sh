@@ -24,8 +24,7 @@ update() {
 
 case "${1-verify}" in
     init)
-        git submodule init
-        git submodule update --checkout
+        git submodule update --init --checkout
         exit 0
         ;;
     update)
