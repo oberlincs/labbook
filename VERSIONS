@@ -1,0 +1,5 @@
+# Git tags for the submodules
+MDBOOK=v0.4.52
+ADMONISH=v1.20.0
+KATEX=v0.9.4
+TERA=v0.6.0
