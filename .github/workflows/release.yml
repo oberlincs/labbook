@@ -28,7 +28,7 @@ jobs:
             - name: Get versions
               run: |
                   ls -lh
-                  tar zxf labbook-${{ github.ref_name }}-x86_64-unknown-linux-gnu.tar.xz
+                  tar Jxf labbook-${{ github.ref_name }}-x86_64-unknown-linux-gnu.tar.xz
                   for bin in bin/*; do
                         ${bin} --version >> versions.txt
                   done
@@ -37,7 +37,7 @@ jobs:
               uses: softprops/action-gh-release@v2
               with:
                   tag_name: ${{ github.ref_name }}
-                  files: ./labbook-${{ github.ref_name }}-*.tar.xz
+                  files: labbook-${{ github.ref_name }}-*.tar.xz
                   body_path: versions.txt
                   draft: true
               env:
