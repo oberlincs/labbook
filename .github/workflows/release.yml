@@ -1,0 +1,41 @@
+name: Tag-based release
+on:
+    push:
+        tags: [ 'v*' ]
+
+permissions:
+    contents: read
+    id-token: write
+
+jobs:
+    build:
+        name: Build
+        uses: ./.github/workflows/build.yml
+        with:
+            tag: ${{ github.ref_name }}
+            upload_artifacts: true
+  
+    release:
+        name: Create GitHub Release
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download Artifacts
+              uses: actions/download-artifact@v7
+            
+            - name: Get versions
+              run: |
+                  tar zxf labbook-${{ github.ref_name }}-x86_64-unknown-linux-gnu.tar.xz
+                  for bin in bin/*; do
+                        ${bin} --version >> versions.txt
+                  done
+
+            - name: Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ github.ref_name }}
+                  files: ./labbook-${{ github.ref_name }}-*.tar.xz
+                  body_path: versions.txt
+                  draft: true
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
