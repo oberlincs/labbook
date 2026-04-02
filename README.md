@@ -1,5 +1,7 @@
 # labbook
 
+[![CI](https://github.com/oberlincs/labbook/actions/workflows/ci.yml/badge.svg)](https://github.com/oberlincs/labbook/actions/workflows/ci.yml)
+
 This repository exists to build one, consistent, version of the `mdbook` tools
 that we can depend on for building our lab websites.
 
